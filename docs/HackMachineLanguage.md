@@ -192,7 +192,6 @@ The following tables show the op-code for each possible comp, dest, and jump ﬁ
 
 - Predeﬁned symbols: A special subset of RAM addresses can be referred to by any assembly program using the following predeﬁned symbols:
   - Virtual Registers: `R0`, `R1`, ..., `R15` are mapped to the virtual registers `0`, `1`, ..., `15`.
-  - 
   - Predefined Pointers: `SP`, `LCL`, `ARG`, `THIS`, `THAT` are mapped to the addresses `0` to `4`, respectively.
 - I/O Pointers: `SCREEN` and `KBD` are mapped to the addresses `16384` (0x4000) and `24576` (0x6000), respectively.
 - Label symbols: These user-deﬁned symbols, which serve to label destinations of `goto` commands, are declared by the pseudo-command ‘‘ (Xxx) ’’.
