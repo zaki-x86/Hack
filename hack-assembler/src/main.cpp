@@ -4,6 +4,8 @@
 
 
 int main(int argc, const char** argv) {
+    (void)argc;
+    (void)argv;
     printf("Assembler is running!\n");    
     
     std::string input = "D=D+A;JMP";
