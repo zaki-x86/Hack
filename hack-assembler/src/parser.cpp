@@ -6,6 +6,8 @@
 #include <iterator>
 #include <vector>
 #include <string>
+#include <iterator>
+#include <algorithm>
 
 using namespace hack::assembler;
 
@@ -89,6 +91,11 @@ command_type parser::command() const
     }
 }
 
+std::string parser::current_command() const
+{
+    return *m_currentCommand;
+}
+
 std::string parser::symbol() const
 {
     if (command() == command_type::A_COMMAND)
@@ -109,7 +116,8 @@ std::string parser::dest() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->substr(0, m_currentCommand->find('='));
+        return m_currentCommand->find('=') == -1 ? 
+         "" : m_currentCommand->substr(0, m_currentCommand->find('='));
     }
     else
     {
@@ -121,8 +129,20 @@ std::string parser::comp() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->substr(m_currentCommand->find('=') + 1, m_currentCommand->find(';') - m_currentCommand->find('=') - 1);
+        if (m_currentCommand->find(';') != std::string::npos)
+        {
+            return dest().empty() ? 
+                m_currentCommand->substr(0, m_currentCommand->find(';')) : 
+                m_currentCommand->substr(m_currentCommand->find('=') + 1, m_currentCommand->find(';') - m_currentCommand->find('=') - 1);
+        }
+        else
+        {
+            return dest().empty() ? 
+                m_currentCommand->substr(0) : 
+                m_currentCommand->substr(m_currentCommand->find('=') + 1);
+        }
     }
+    
     else
     {
         throw std::invalid_argument("Current command is not a C_COMMAND");
@@ -133,7 +153,8 @@ std::string parser::jump() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->substr(m_currentCommand->find(';') + 1);
+        return m_currentCommand->find(';') == -1 ? 
+            "" : m_currentCommand->substr(m_currentCommand->find(';') + 1);
     }
     else
     {
@@ -141,4 +162,12 @@ std::string parser::jump() const
     }
 }
 
+size_t parser::line_number() const
+{
+    return static_cast<size_t>(m_currentCommand - m_commands.begin()) + 1;
+}
 
+inline size_t parser::size() const
+{
+    return m_commands.size();
+}

@@ -25,10 +25,13 @@ namespace hack::assembler
         bool more_commands() const;
         void advance(); 
         command_type command() const;
+        std::string current_command() const;
         std::string symbol() const;
         std::string dest() const;
         std::string comp() const;
         std::string jump() const;
+        size_t line_number() const;
+        inline size_t size() const;
 
     private:
         std::vector<std::string> m_commands;
