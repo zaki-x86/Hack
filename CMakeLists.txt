@@ -20,7 +20,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/scripts/cmake ${CMAKE_MODULE_P
 message(STATUS "Module path is set to: ${CMAKE_MODULE_PATH}")
 #include(Utils)
 #include(CompilerWarnings)
-
+include(common)
 ##################################
 # Build options
 ##################################

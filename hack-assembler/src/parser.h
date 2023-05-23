@@ -15,7 +15,7 @@ namespace hack::assembler
     class parser
     {
     public:
-        parser(const char* filename);
+        parser(std::string filename);
         ~parser();
         parser(parser &&) = delete;
         parser(const parser &) = delete;
@@ -29,7 +29,6 @@ namespace hack::assembler
         std::string dest() const;
         std::string comp() const;
         std::string jump() const;
-    };
 
     private:
         std::vector<std::string> m_commands;
