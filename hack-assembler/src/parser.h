@@ -3,15 +3,10 @@
 #include <vector>
 #include <string>
 
+#include "common.h"
+
 namespace hack::assembler
 {
-    enum class command_type
-    {
-        A_COMMAND,
-        C_COMMAND,
-        L_COMMAND
-    };
-
     class parser
     {
     public:

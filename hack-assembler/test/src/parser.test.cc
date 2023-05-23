@@ -99,7 +99,6 @@ TEST_CASE("Parsing symbols from A-instructions and L-instructions test") {
 
     while (parser.more_commands())
     {
-
         if (parser.command() == hack::assembler::command_type::A_COMMAND)
         {
             CHECK(parser.symbol() == "700");
@@ -151,7 +150,6 @@ TEST_CASE("Parsing C-instructions test") {
 
     while (parser.more_commands())
     {
-
         if (parser.command() == hack::assembler::command_type::C_COMMAND)
         {
             CHECK_MESSAGE(parser.dest() == std::get<0>(expected[parser.line_number() - 1]), "Command: " << parser.current_command());

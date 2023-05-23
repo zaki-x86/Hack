@@ -116,7 +116,7 @@ std::string parser::dest() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->find('=') == -1 ? 
+        return m_currentCommand->find('=') != std::string::npos ?
          "" : m_currentCommand->substr(0, m_currentCommand->find('='));
     }
     else
@@ -153,7 +153,7 @@ std::string parser::jump() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->find(';') == -1 ? 
+        return m_currentCommand->find(';') != std::string::npos ?
             "" : m_currentCommand->substr(m_currentCommand->find(';') + 1);
     }
     else

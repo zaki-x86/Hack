@@ -8,9 +8,9 @@ project(
 )
 
 set(MAIN_PROJECT OFF)
-if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
     set(MAIN_PROJECT ON)
-    message(STATUS "XSTL is being built as a main project")
+    message(STATUS "Hack stack is being built as a main project")
 endif()
 
 ##################################
@@ -26,7 +26,7 @@ include(common)
 ##################################
 
 # Prevent building in source dir
-if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+if(${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
   message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.\n")
 endif()
 
@@ -42,7 +42,13 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     message(STATUS "_DEBUG macro is added for debugging specific code\n")
 endif()
 
-message(STATUS "Building hack ...")
+message(STATUS "Building 3rd party libraries ...")
+#add_subdirectory(common/csv)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+message(STATUS "Building hack components ...")
 add_subdirectory(hack-assembler)
 add_subdirectory(hack-vm)
 add_subdirectory(hack-compiler)

@@ -1,39 +1,35 @@
-cmake_minimum_required(VERSION 3.24)
-
 project(
     "HackAssembler"
-    VERSION 0.1.0
-    DESCRIPTION "Hack assembler written in C++"
-    LANGUAGES CXX
 )
 
-set(MAIN_PROJECT OFF)
-if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    set(MAIN_PROJECT ON)
-    message(STATUS "${PROJECT_NAME} is being built as a main project")
-    set(CMAKE_MODULE_PATH ../scripts/cmake ${CMAKE_MODULE_PATH})
-    message(STATUS "Module path is set to: ${CMAKE_MODULE_PATH}")
-    #include(Utils)
-    #include(CompilerWarnings)
-    include(common)
-else()
-    message(STATUS "${PROJECT_NAME} is being built as a sub-project of ${CMAKE_PROJECT_NAME}")
-endif()
+message(STATUS "Building ${PROJECT_NAME} ...")
 
 file(GLOB_RECURSE ASSEMBLER_SOURCES "src/*.cpp")
 file(GLOB_RECURSE ASSEMBLER_HEADERS "src/*.h")
+add_executable(HackAssembler ${ASSEMBLER_SOURCES})
+target_compile_features(HackAssembler PUBLIC cxx_std_17)
 
-message(STATUS "Building ${PROJECT_NAME} ...")
-add_executable(${PROJECT_NAME} ${ASSEMBLER_SOURCES} ${ASSEMBLER_HEADERS})
+# Copy _builtin directory to build directory
+message(STATUS "Copying symbol tables to build directory ...")
+add_custom_command(TARGET HackAssembler POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/_builtin $<TARGET_FILE_DIR:${PROJECT_NAME}>/_builtin
+)
 
-target_include_directories(${PROJECT_NAME}
-    PUBLIC 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    )
-target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_link_libraries(HackAssembler INTERFACE CSVParser)
+
+# # set include directories:
+# target_include_directories(HackAssembler
+#     PUBLIC
+#     ${CMAKE_SOURCE_DIR}/common/csv
+# )
+
+# check directories that are linked to the target:
+get_target_property(_target_include_dirs HackAssembler INCLUDE_DIRECTORIES)
+message(STATUS "Include directories of ${PROJECT_NAME}: ${_target_include_dirs}")
 
 message(STATUS "Building ${PROJECT_NAME} done!")
 
 message(STATUS "Building ${PROJECT_NAME} tests ...")
-add_library(${PROJECT_NAME}_lib STATIC ${ASSEMBLER_SOURCES} ${ASSEMBLER_HEADERS})
+add_library(HackAssembler_lib STATIC ${ASSEMBLER_SOURCES} ${ASSEMBLER_HEADERS})
 add_subdirectory(test)
