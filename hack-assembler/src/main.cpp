@@ -2,9 +2,6 @@
 #include <string>
 #include <sstream>
 
-#include "parser.h"
-#include "coder.h"
-#include "sym_table.h"
 
 int main(int argc, const char** argv) {
     (void)argc;

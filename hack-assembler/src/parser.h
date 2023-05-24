@@ -11,6 +11,7 @@ namespace hack::assembler
     {
     public:
         parser(std::string filename);
+        parser(std::string filename);
         ~parser();
         parser(parser &&) = delete;
         parser(const parser &) = delete;
