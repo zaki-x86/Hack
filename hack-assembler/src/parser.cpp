@@ -115,14 +115,11 @@ std::string parser::symbol() const
 std::string parser::dest() const
 {
     if (command() == command_type::C_COMMAND)
-    {
-        return m_currentCommand->find('=') != std::string::npos ?
+        return m_currentCommand->find('=') == std::string::npos ?
          "" : m_currentCommand->substr(0, m_currentCommand->find('='));
-    }
+
     else
-    {
         throw std::invalid_argument("Current command is not a C_COMMAND");
-    }
 }
 
 std::string parser::comp() const
@@ -153,7 +150,7 @@ std::string parser::jump() const
 {
     if (command() == command_type::C_COMMAND)
     {
-        return m_currentCommand->find(';') != std::string::npos ?
+        return m_currentCommand->find(';') == std::string::npos ?
             "" : m_currentCommand->substr(m_currentCommand->find(';') + 1);
     }
     else

@@ -100,13 +100,10 @@ TEST_CASE("Parsing symbols from A-instructions and L-instructions test") {
     while (parser.more_commands())
     {
         if (parser.command() == hack::assembler::command_type::A_COMMAND)
-        {
             CHECK(parser.symbol() == "700");
-        }
+
         else if (parser.command() == hack::assembler::command_type::L_COMMAND)
-        {
             CHECK(parser.symbol() == "LOOP");
-        }
         
         parser.advance();
     }

@@ -11,9 +11,9 @@ sym_table::sym_table()
     std::string predefined_symbols_file = std::filesystem::current_path().append("_builtin\\hack-predefined.s").string();
     io::CSVReader<2> in(predefined_symbols_file);
     in.read_header(io::ignore_extra_column, "label", "address");
+
     std::string label;
     address_t address;
-
     while (in.read_row(label, address)) {
         m_table.insert({ label, address });
     }

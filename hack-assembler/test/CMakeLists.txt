@@ -1,5 +1,6 @@
-
 file(GLOB_RECURSE TEST_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+enable_testing()
+include(CTest)
 
 foreach(file ${TEST_SRCS})
     message(STATUS "Adding test ${file}")
