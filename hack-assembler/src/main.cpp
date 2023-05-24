@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 
+#include "hack_assembler.h"
+
 
 int main(int argc, const char** argv) {
     (void)argc;
